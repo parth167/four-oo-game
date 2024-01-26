@@ -9,7 +9,6 @@ class Game {
     this.players = [p1, p2];
     this.height = height;
     this.width = width;
-
     this.currPlayer = p1;
     this.makeBoard();
     this.makeHtmlBoard();
@@ -44,7 +43,7 @@ class Game {
     this.handleGameClick = this.handleClick.bind(this);
     top.addEventListener('click', this.handleGameClick);
 
-    for (let x = 0; x < width; x++) {
+    for (let x = 0; x < this.width; x++) {
       const headCell = document.createElement('td');
       headCell.setAttribute('id', x);
       top.append(headCell);
@@ -53,10 +52,10 @@ class Game {
     board.append(top);
 
     // make main part of board
-    for (let y = 0; y < height; y++) {
+    for (let y = 0; y < this.height; y++) {
       const row = document.createElement('tr');
 
-      for (let x = 0; x < width; x++) {
+      for (let x = 0; x < this.width; x++) {
         const cell = document.createElement('td');
         cell.setAttribute('id', `${y}-${x}`);
         row.append(cell);
@@ -110,11 +109,11 @@ class Game {
     }
 
     // place piece in board and add to HTML table
-    this.board[y][x] = currPlayer;
+    this.board[y][x] = this.currPlayer;
     this.placeInTable(y, x);
 
     // check for win
-    if (checkForWin()) {
+    if (this.checkForWin()) {
       this.gameover = true;
       return this.endGame(`Player ${this.currPlayer.color} won!`);
     }
